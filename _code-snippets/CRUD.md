@@ -1,20 +1,7 @@
 # Firebase CRUD
 
 ```js
-// CREATE
-export const createTimer = async (timerData: TimerInput): Promise<string> => {
-  try {
-    const docRef = await addDoc(collection(firestoreDb, COLLECTION_NAME), {
-      ...timerData,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
-    });
-    return docRef.id;
-  } catch (error) {
-    console.error("Error creating timer:", error);
-    throw error;
-  }
-};
+
 
 // READ ALL
 export const getAllTimers = async (): Promise<Timer[]> => {

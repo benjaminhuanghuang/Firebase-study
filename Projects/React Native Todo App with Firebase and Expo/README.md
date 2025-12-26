@@ -1,5 +1,7 @@
 # React Native Todo App with Firebase and Expo
 
+By Simon Grimm
+
 https://www.youtube.com/live/TwxdOFcEah4
 
 https://docs.expo.dev/guides/using-firebase/
@@ -8,6 +10,12 @@ https://docs.expo.dev/guides/using-firebase/
 
 1. Create project
 2. Add web app, give a name
+
+3. Setup cloud firestore: Create database -> Modify the rules
+
+```json
+allow read, write: if
+```
 
 ## Create project
 
