@@ -1,7 +1,7 @@
 import { View, Text, Button, TextInput } from "react-native";
 import React, { useEffect } from "react";
 import { db } from "../../firebaseConfig";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs, onSnapshot } from "firebase/firestore";
 
 type Props = {
   navigation: any;
@@ -12,8 +12,27 @@ const List = ({ navigation }: Props) => {
     Array<{ id: string; title: string; completed: boolean }>
   >([]);
   const [todo, setTodo] = React.useState<string>("");
+
   useEffect(() => {
-    // console.log("List component mounted");
+    const todoRef = collection(db, "todos");
+    const subscriber = onSnapshot(todoRef, {
+      next: (querySnapshot) => {
+        const todos = [];
+        querySnapshot.forEach((doc) => {
+          const { title, completed } = doc.data();
+          todos.push({
+            id: doc.id,
+            title,
+            completed,
+          });
+        });
+        setTodos(todos);
+      },
+      error: (error) => {
+        console.error("Error fetching todos: ", error);
+      },
+    });
+    return () => subscriber();
   }, []);
 
   const addTodo = async () => {
@@ -39,6 +58,18 @@ const List = ({ navigation }: Props) => {
           value={todo}
         />
         <Button onPress={addTodo} title="Add Todo" disabled={todo === ""} />
+      </View>
+      <View>
+        {todos.map((t) => (
+          <Text
+            style={{
+              textDecorationLine: t.completed ? "line-through" : "none",
+              fontSize: 18,
+            }}
+          >
+            {t.title}
+          </Text>
+        ))}
       </View>
     </View>
   );
