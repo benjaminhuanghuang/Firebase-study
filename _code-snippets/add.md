@@ -4,7 +4,8 @@
 import { db } from "../../firebaseConfig";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 
-const docRef = await addDoc(collection(db, "todos"), {
+const collectionTodos = collection(db, "todos");
+const docRef = await addDoc(collectionTodos, {
   title: "Sample Todo",
   completed: false,
 });

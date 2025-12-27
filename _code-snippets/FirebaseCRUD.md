@@ -1,5 +1,28 @@
 # Firebase CRUD
 
+## Create document
+
+```js
+import { db } from "../../firebaseConfig";
+import { addDoc, collection, getDocs } from "firebase/firestore";
+
+const collectionTodos = collection(db, "todos"); // create or get a collection
+const newTodo = {
+  title: "Sample Todo",
+  completed: false,
+  createdAt: new Date(),
+};
+const docRef = await addDoc(collectionTodos, newTodo);
+
+console.log("Document written with ID: ", docRef.id);
+```
+
+## Get
+
+```js
+const collectionTodos = collection(db, "todos"); // create or get a collection
+```
+
 ```js
 
 

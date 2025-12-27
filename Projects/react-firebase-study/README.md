@@ -6,7 +6,9 @@
 
 2. Add web app
 
-3.
+3. Create firestore: Open project -> Firestore Database -> Create database -> Start in test mode, setup security rules
+
+4. Create realtime database: Open project -> Realtime Database -> Create database -> Start in test mode, setup security rules
 
 ```sh
 npm install -g firebase-tools
@@ -41,6 +43,13 @@ Create config/FirebaseConfig.ts
 ```sh
 npm i -g firebase-tools
 firebase login
+
 firebase init
+- use existing project
+- select dist folder
+
+
 firebase deploy
 ```
+
+https://fir-react-study-f0792.web.app/
