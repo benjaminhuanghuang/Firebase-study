@@ -7,3 +7,4 @@ coverage
 drizzle
 .next
 .expo
+package-lock.json

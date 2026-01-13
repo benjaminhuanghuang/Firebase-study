@@ -1,39 +1,39 @@
-import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
-import {auth, provider} from '../firebase'
+import { useRef, useState } from "react";
+import { Form, Button, Card, Alert } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, provider } from "../firebase";
+import { signInWithPopup } from "firebase/auth";
 
 export default function Login() {
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const { login, setCurrentUser } = useAuth()
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-  const history = useHistory()
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const { login, setCurrentUser } = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-      setError("")
-      setLoading(true)
-      await login(emailRef.current.value, passwordRef.current.value)
-      history.push("/")
+      setError("");
+      setLoading(true);
+      await login(emailRef.current.value, passwordRef.current.value);
+      navigate("/");
     } catch {
-      setError("Failed to log in")
+      setError("Failed to log in");
     }
 
-    setLoading(false)
+    setLoading(false);
   }
 
   // this is other way to use signIn
   const googleSignIn = () => {
-    auth
-      .signInWithPopup(provider)
-      .then((user) => {
-        setCurrentUser(user);
-        history.push("/");
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        setCurrentUser(result.user);
+        navigate("/");
       })
       .catch((error) => {
         alert(error.message);
@@ -65,11 +65,10 @@ export default function Login() {
       </Card>
       <div className="w-100 text-center mt-2">
         Need an account? <Link to="/signup">Sign Up</Link>
-
-        <Button  color="primary" onClick={googleSignIn}>
+        <Button color="primary" onClick={googleSignIn}>
           Google Login
         </Button>
       </div>
     </>
-  )
+  );
 }
